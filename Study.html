@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study - KidsBuild.Tech</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Comic Neue', cursive;
+      background-color: #87CEEB; /* Sky Blue */
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background-color: #FF69B4; /* Pink */
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 20px 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      height: 80px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin: 0;
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .menu-button-header {
+      background-color: white;
+      color: #FF69B4; /* Pink */
+      font-size: 20px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+      position: absolute;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-button-header:hover {
+      background-color: #FF1493; /* Darker Pink */
+      color: white;
+    }
+
+    .menu-button-header .arrow {
+      font-size: 24px;
+      transition: transform 0.3s;
+      display: none; /* Hide arrow by default */
+    }
+
+    /* Menu */
+    .menu {
+      width: 250px;
+      height: 100vh;
+      background-color: #87CEEB; /* Sky Blue */
+      color: white;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      transition: left 0.3s;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .menu.open {
+      left: 0; /* Show menu */
+    }
+
+    .menu-button {
+      background-color: white;
+      color: #FF69B4; /* Pink */
+      font-size: 20px;
+      border: none;
+      padding: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+    }
+
+    .menu-button:hover {
+      background-color: #FF1493; /* Darker Pink */
+      color: white;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+      font-size: 18px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu a:hover {
+      background-color: #FF1493; /* Darker Pink */
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      margin-left: 0;
+      transition: margin-left 0.3s;
+    }
+
+    .main-content.menu-open {
+      margin-left: 250px; /* Push content to the right when menu is open */
+    }
+
+    /* Study Topics Section */
+    .study-topics {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .topic-button {
+      background-color: white;
+      color: #333;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .topic-button:hover {
+      background-color: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    .topic-button.active {
+      background-color: #FF69B4; /* Pink */
+      color: white;
+    }
+
+    .topic-content {
+      display: none;
+      padding: 15px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 10px;
+    }
+
+    .topic-content p {
+      margin: 0 0 15px 0;
+    }
+
+    .start-now-button {
+      background-color: #FF69B4; /* Pink */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .start-now-button:hover {
+      background-color: #FF1493; /* Darker Pink */
+    }
+
+    /* Footer */
+    footer {
+      background-color: white;
+      padding: 1rem;
+      color: #333;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: auto; /* Push footer to the bottom */
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .menu-button-header {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+
+      .menu {
+        width: 100%; /* Full width for smaller screens */
+        height: auto; /* Auto height for smaller screens */
+        top: -100%; /* Hide menu initially */
+        left: 0;
+        bottom: auto;
+        transition: top 0.3s;
+      }
+
+      .menu.open {
+        top: 80px; /* Show menu under the header */
+      }
+
+      .menu-button-header .arrow {
+        display: inline; /* Show arrow on smaller screens */
+      }
+
+      .menu-button-header .text {
+        display: none; /* Hide "Menu" text on smaller screens */
+      }
+
+      .menu a {
+        padding: 15px; /* Thinner menu items */
+        font-size: 16px;
+      }
+
+      .main-content.menu-open {
+        margin-left: 0; /* No margin for smaller screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 18px;
+      }
+
+      .menu-button-header {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+
+      .menu a {
+        padding: 10px; /* Thinner menu items */
+        font-size: 14px;
+      }
+
+      .main-content {
+        padding: 10px;
+      }
+
+      .topic-button {
+        font-size: 16px;
+        padding: 12px 15px;
+      }
+    }
+  </style>
+</head>
+<body class="primary-1-3">
+  <!-- Header -->
+  <div class="header">
+    <button class="menu-button-header" id="menuButtonHeader" onclick="toggleMenu()">
+      <span class="text">Menu</span>
+      <span class="arrow">&#9664;</span> <!-- Left arrow icon -->
+    </button>
+    <h1>Study - KidsBuild.Tech</h1>
+  </div>
+
+  <!-- Menu -->
+  <div class="menu" id="menu">
+    <button class="menu-button" id="menuButton" onclick="toggleMenu()">Back</button>
+    <a href="dashboard.php">Home</a>
+    <a href="study.html">Study</a>
+    <a href="quiz_and_games.html">Quiz</a>
+    <a href="profile.php">Profile</a>
+    <a href="learning_materials.html">Other Learning Materials</a>
+    <a href="logout.php">Log Out</a>
+  </div>
+
+  <!-- Main Content -->
+<div class="main-content" id="mainContent">
+  <div class="study-topics">
+    <!-- Topic 1: Introduction to Robotics -->
+    <button class="topic-button" onclick="toggleTopic('robotics')">Introduction to Robotics</button>
+    <div class="topic-content" id="robotics">
+      <p>Discover what robots are, how they differ from machines, and their real-life applications. Learn about essential robot parts like sensors, motors, and controllers, while understanding basic safety rules for handling tools.</p>
+      <button onclick="window.location.href='Study/intro_to_robotics.html'" class="start-now-button" >Start Now</button>
+    </div>
+
+    <!-- Topic 2: Basics of Electricity -->
+    <button class="topic-button" onclick="toggleTopic('electricity')">Basics of Electricity</button>
+    <div class="topic-content" id="electricity">
+      <p>Understand the concept of electricity, where it comes from, and how it flows. Learn about conductors, insulators, and fundamental electrical safety tips.</p>
+      <button onclick="window.location.href='Study/basics_of_elect.html'" class="start-now-button" >Start Now</button>
+    </div>
+
+    <!-- Topic 3: Circuit Building Fundamentals -->
+    <button class="topic-button" onclick="toggleTopic('circuits')">Circuit Building Fundamentals</button>
+    <div class="topic-content" id="circuits">
+      <p>Explore the basics of voltage, current, and resistance using simple analogies. Get hands-on experience with batteries, breadboards, and key electronic components like resistors, LEDs, and switches.</p>
+      <button onclick="window.location.href='Study/circuit_building.html'" class="start-now-button" >Start Now</button>
+    </div>
+
+    <!-- Topic 4: Introduction to Motors and Sensors -->
+    <button class="topic-button" onclick="toggleTopic('motors_sensors')">Introduction to Motors and Sensors</button>
+    <div class="topic-content" id="motors_sensors">
+      <p>Learn how robots move using different types of motors and how sensors help them interact with their environment. Experiment with motor control and light sensors.</p>
+      <button onclick="window.location.href='Study/motors_and_sensors.html'" class="start-now-button" >Start Now</button>
+    </div>
+
+    <!-- Topic 5: Introduction to Microcontrollers -->
+    <button class="topic-button" onclick="toggleTopic('microcontrollers')">Introduction to Microcontrollers</button>
+    <div class="topic-content" id="microcontrollers">
+      <p>Discover how microcontrollers like Arduino act as the "brain" of robots. Learn how to connect an Arduino to a computer and upload simple programs.</p>
+      <button onclick="window.location.href='Study/microcontrollers.html'"class="start-now-button" >Start Now</button>
+    </div>
+
+    <!-- Topic 6: Programming Basics for Robotics -->
+    <button class="topic-button" onclick="toggleTopic('programming')">Programming Basics for Robotics</button>
+    <div class="topic-content" id="programming">
+      <p>Explore block-based programming and Arduino C++. Understand how code controls robots and try simple coding activities with LEDs and buzzers.</p>
+      <button class="start-now-button" onclick="window.location.href='Study/programming.html'">Start Now</button>
+    </div>
+
+    <!-- Topic 7: Building a Simple Robot -->
+    <button class="topic-button" onclick="toggleTopic('robot_building')">Building a Simple Robot</button>
+    <div class="topic-content" id="robot_building">
+      <p>Step-by-step guide to creating line-following robots using Arduino, sensors, and motors. Learn how to write, test, and debug robot code.</p>
+      <button class="start-now-button" onclick="window.location.href='Study/simple_robot.html'">Start Now</button>
+    </div>
+
+    <!-- Topic 8: Robotics Challenges & Final Project -->
+    <button class="topic-button" onclick="toggleTopic('final_project')">Robotics Challenges & Final Project</button>
+    <div class="topic-content" id="final_project">
+      <p>Enhance your robot with new features, improve performance, and complete a final project by designing your own custom robot.</p>
+      <button class="start-now-button" onclick="window.location.href='Study/robotics_challenges.html'">Start Now</button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2023 KidsBuild.Tech | Building the Future, One Robot at a Time
+  </footer>
+
+  <script>
+    // Toggle Menu Functionality
+    const menu = document.getElementById('menu');
+    const menuButtonHeader = document.getElementById('menuButtonHeader');
+    const menuButton = document.getElementById('menuButton');
+    const mainContent = document.getElementById('mainContent');
+    const arrow = document.querySelector('.arrow');
+
+    function toggleMenu() {
+      const isOpen = menu.classList.toggle('open');
+      arrow.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+      mainContent.classList.toggle('menu-open', isOpen);
+    }
+
+    // Toggle Topic Content
+    function toggleTopic(topicId) {
+      const topicContent = document.getElementById(topicId);
+      const topicButton = topicContent.previousElementSibling;
+
+      // Close all other topics
+      document.querySelectorAll('.topic-content').forEach(content => {
+        if (content.id !== topicId) {
+          content.style.display = 'none';
+          content.previousElementSibling.classList.remove('active');
+        }
+      });
+
+      // Toggle current topic
+      if (topicContent.style.display === 'block') {
+        topicContent.style.display = 'none';
+        topicButton.classList.remove('active');
+      } else {
+        topicContent.style.display = 'block';
+        topicButton.classList.add('active');
+      }
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - KidsBuild.Tech</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Neue', cursive;
+      background-color: #87CEEB; /* Sky Blue */
+      color: #333;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 2rem;
+      color: #FF69B4; /* Pink */
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh; /* Full height */
+      padding: 20px;
+      box-sizing: border-box; /* Ensure padding is included in height */
+    }
+
+    /* Form Styles */
+    .form-container {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      margin: 1rem auto; /* Center the form */
+      box-sizing: border-box; /* Ensure padding is included in width */
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .form-group input {
+      width: calc(100% - 24px); /* Account for padding */
+      padding: 10px 12px; /* Consistent padding */
+      font-size: 1rem;
+      border: 2px solid #FF69B4; /* Pink */
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box; /* Ensure padding is included in width */
+    }
+
+    .form-group input:focus {
+      border-color: #FF1493; /* Darker Pink */
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 1.2rem;
+      color: white;
+      background-color: #FF69B4; /* Pink */
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-sizing: border-box; /* Ensure padding is included in width */
+    }
+
+    .btn:hover {
+      background-color: #FF1493; /* Darker Pink */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Footer */
+    footer {
+      background-color: white;
+      padding: 0.5rem;
+      color: #333;
+      font-size: 0.9rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .form-container {
+        padding: 1.5rem;
+      }
+
+      .form-group label {
+        font-size: 1rem;
+      }
+
+      .form-group input {
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .form-container {
+        padding: 1rem;
+      }
+
+      .form-group label {
+        font-size: 0.9rem;
+      }
+
+      .form-group input {
+        font-size: 0.8rem;
+      }
+
+      .btn {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Create Account</h1>
+    <div class="form-container">
+      <form id="create-account-form">
+        <!-- Username -->
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+
+        <!-- Age -->
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" placeholder="Enter your age" min="1" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2023 KidsBuild.Tech | Building the Future, One Robot at a Time
+  </footer>
+
+  <script>
+    document.getElementById('create-account-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+    
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+    
+      const response = await fetch('http://localhost/kidsbuild/register.php', {
+        method: 'POST',
+        body: new URLSearchParams(data)
+      });
+    
+      const result = await response.json();
+      if (result.message) {
+        alert(result.message);
+        window.location.href = 'login.html';
+      } else {
+        alert(result.error);
+      }
+    });
+    </script>
+    
+</body>
+</html>

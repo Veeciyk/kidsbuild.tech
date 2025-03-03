@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Materials - KidsBuild.Tech</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Comic Neue', cursive;
+      background-color: #87CEEB; /* Sky Blue */
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    /* Header */
+    .header {
+      background-color: #FF69B4; /* Pink */
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 20px 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      height: 80px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin: 0;
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .menu-button-header {
+      background-color: white;
+      color: #FF69B4; /* Pink */
+      font-size: 20px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+      position: absolute;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-button-header:hover {
+      background-color: #FF1493; /* Darker Pink */
+      color: white;
+    }
+
+    .menu-button-header .arrow {
+      font-size: 24px;
+      transition: transform 0.3s;
+      display: none; /* Hide arrow by default */
+    }
+
+    /* Menu */
+    .menu {
+      width: 250px;
+      height: 100vh;
+      background-color: #87CEEB; /* Sky Blue */
+      color: white;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      transition: left 0.3s;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .menu.open {
+      left: 0; /* Show menu */
+    }
+
+    .menu-button {
+      background-color: white;
+      color: #FF69B4; /* Pink */
+      font-size: 20px;
+      border: none;
+      padding: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+    }
+
+    .menu-button:hover {
+      background-color: #FF1493; /* Darker Pink */
+      color: white;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+      font-size: 18px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu a:hover {
+      background-color: #FF1493; /* Darker Pink */
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-left: 0;
+      transition: margin-left 0.3s;
+    }
+
+    .main-content.menu-open {
+      margin-left: 250px; /* Push content to the right when menu is open */
+    }
+
+    /* Learning Materials Section */
+    .material-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .material-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .material-card h2 {
+      color: #FF69B4; /* Pink */
+      margin-top: 0;
+    }
+
+    .material-card iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .material-card a {
+      color: #FF69B4; /* Pink */
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .material-card a:hover {
+      color: #FF1493; /* Darker Pink */
+    }
+
+    /* Footer */
+    footer {
+      background-color: white;
+      padding: 1rem;
+      color: #333;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: auto; /* Push footer to the bottom */
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .menu-button-header {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+
+      .menu {
+        width: 100%; /* Full width for smaller screens */
+        height: auto; /* Auto height for smaller screens */
+        top: -100%; /* Hide menu initially */
+        left: 0;
+        bottom: auto;
+        transition: top 0.3s;
+      }
+
+      .menu.open {
+        top: 80px; /* Show menu under the header */
+      }
+
+      .menu-button-header .arrow {
+        display: inline; /* Show arrow on smaller screens */
+      }
+
+      .menu-button-header .text {
+        display: none; /* Hide "Menu" text on smaller screens */
+      }
+
+      .menu a {
+        padding: 15px; /* Thinner menu items */
+        font-size: 16px;
+      }
+
+      .main-content.menu-open {
+        margin-left: 0; /* No margin for smaller screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 18px;
+      }
+
+      .menu-button-header {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+
+      .menu a {
+        padding: 10px; /* Thinner menu items */
+        font-size: 14px;
+      }
+
+      .main-content {
+        grid-template-columns: 1fr; /* Single column for mobile */
+      }
+
+      .material-card {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body class="primary-1-3">
+  <!-- Header -->
+  <div class="header">
+    <button class="menu-button-header" id="menuButtonHeader" onclick="toggleMenu()">
+      <span class="text">Menu</span>
+      <span class="arrow">&#9664;</span> <!-- Left arrow icon -->
+    </button>
+    <h1>Learning Materials - KidsBuild.Tech</h1>
+  </div>
+
+  <!-- Menu -->
+  <div class="menu" id="menu">
+    <button class="menu-button" id="menuButton" onclick="toggleMenu()">Back</button>
+    <a href="dashboard.php">Home</a>
+    <a href="Study.html">Study</a>
+    <a href="quiz_and_games.html">Quiz</a>
+    <a href="profile.php">Profile</a>
+    <a href="learning_materials.html">Other Learning Materials</a>
+    <a href="logout.php">Log Out</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- YouTube Videos -->
+    <div class="material-card">
+      <h2>Introduction to Arduino</h2>
+      <iframe src="https://www.youtube.com/embed/JnJIKX5J0Cc?si=VXusA9Dsuh6_zuef" allowfullscreen></iframe>
+      <p>Learn the basics of Arduino in this fun video!</p>
+    </div>
+
+    <div class="material-card">
+      <h2>How to Build a Simple Circuit</h2>
+      <iframe src="https://www.youtube.com/embed/oDUAvaXsK1g?si=0bcP-WrorTPRILX" allowfullscreen></iframe>
+      <p>Watch this video to learn how to build a simple circuit.</p>
+    </div>
+
+    <!-- Arduino Documentation -->
+    <div class="material-card">
+      <h2>Arduino Official Documentation</h2>
+      <p>Explore the official Arduino documentation to learn more.</p>
+      <a href="https://www.arduino.cc/en/Guide" target="_blank">Visit Arduino Docs</a>
+    </div>
+
+    <!-- Textbooks -->
+    <div class="material-card">
+      <h2>Robotics: Everything You Need to Know About Robotics from Beginner to Expert by Peter Mckinnon</h2>
+      <p>Download this textbook to learn the basics of robotics.</p>
+      <a href="https://annas-archive.org/md5/d0b3fd68b08d7a4d1cafeb8cfbcef47c" download>Download Textbook</a>
+    </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2023 KidsBuild.Tech | Building the Future, One Robot at a Time
+  </footer>
+
+  <script>
+    // Toggle Menu Functionality
+    const menu = document.getElementById('menu');
+    const menuButtonHeader = document.getElementById('menuButtonHeader');
+    const menuButton = document.getElementById('menuButton');
+    const mainContent = document.getElementById('mainContent');
+    const arrow = document.querySelector('.arrow');
+
+    function toggleMenu() {
+      const isOpen = menu.classList.toggle('open');
+      arrow.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+      mainContent.classList.toggle('menu-open', isOpen);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - KidsBuild.Tech</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Comic Neue', cursive;
+      background-color: #87CEEB;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background-color: #FF69B4;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 20px 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      height: 80px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin: 0;
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .menu-button-header {
+      background-color: white;
+      color: #FF69B4;
+      font-size: 20px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+      position: absolute;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-button-header:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    .menu-button-header .arrow {
+      font-size: 24px;
+      transition: transform 0.3s;
+      display: none;
+    }
+
+    /* Menu */
+    .menu {
+      width: 250px;
+      height: 100vh;
+      background-color: #87CEEB;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      transition: left 0.3s;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .menu.open {
+      left: 0;
+    }
+
+    .menu-button {
+      background-color: white;
+      color: #FF69B4;
+      font-size: 20px;
+      border: none;
+      padding: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+    }
+
+    .menu-button:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+      font-size: 18px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu a:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      margin: 0 auto;
+      max-width: 1200px;
+    }
+
+    .lesson-section {
+      background-color: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-with-image {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .text-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .image-content {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .image-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      color: #FF69B4;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .fun-fact {
+      background-color: #E6F7FF;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 5px solid #1E90FF;
+    }
+
+    .robot-parts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .part-card {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .part-card img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    .activity-box {
+      background-color: #F0FFF0;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border: 2px dashed #4CAF50;
+    }
+
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .safety-card {
+      background-color: #FFF3E0;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .safety-card img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: white;
+      padding: 1rem;
+      color: #333;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: auto;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .menu-button-header {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+
+      .menu {
+        width: 100%;
+        height: auto;
+        top: -100%;
+        left: 0;
+        transition: top 0.3s;
+      }
+
+      .menu.open {
+        top: 80px;
+      }
+
+      .menu-button-header .arrow {
+        display: inline;
+      }
+
+      .menu-button-header .text {
+        display: none;
+      }
+
+      .menu a {
+        padding: 15px;
+        font-size: 16px;
+      }
+
+      .lesson-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body class="primary-1-3">
+  <div class="header">
+>
+    <h1>KidsBuild.Tech Dashboard</h1>
+  </div>
+
+
+  <div class="main-content" id="mainContent">
+    <div class="lesson-section">
+      <h1 class="section-title" style="text-align: center;">Class 3: Circuit Building Fundamentals 🔧</h1>
+      
+      <div class="content-with-image">
+        <div class="text-content">
+          <h2>Welcome Back, Young Engineers! 🚀</h2>
+          <p>Today we're taking our first steps into building real circuits! Don't worry if you can't get all the parts - we'll be using Wokwi, a free online simulator that lets you build and test circuits right from your computer!</p>
+        </div>
+        <div class="image-content">
+          <img src="images/CircuitBuild.jpg" alt="Circuit building introduction">
+        </div>
+      </div>
+    
+      <div class="content-with-image">
+        <div class="image-content">
+          <img src="images/breadbored.jpg" alt="Breadboard diagram">
+        </div>
+        <div class="text-content">
+          <h2>Meet Your New Friend: The Breadboard! 🎯</h2>
+          <p>A breadboard is like a Lego board for electronics. It has lots of tiny holes where we can plug in different parts. The magic happens because some of these holes are connected inside the board!</p>
+          <ul>
+            <li>The holes in each row are connected (like a train track) 🚂</li>
+            <li>The + and - rails on the sides power your circuit</li>
+            <li>Parts can be easily removed and reused</li>
+          </ul>
+        </div>
+      </div>
+    
+      <div class="robot-parts">
+        <div class="part-card">
+          <img src="images/Resistor.jpg" alt="Resistor">
+          <h3>Resistors 🛑</h3>
+          <p>Controls how much electricity flows - like a water tap!</p>
+        </div>
+        <div class="part-card">
+          <img src="images/LEDs.jpg" alt="LED">
+          <h3>LEDs 💡</h3>
+          <p>Lights up when electricity flows through it</p>
+        </div>
+        <div class="part-card">
+          <img src="images/Switch.png" alt="Switch">
+          <h3>Switches 🔘</h3>
+          <p>Turns the electricity on and off</p>
+        </div>
+        <div class="part-card">
+          <img src="images/buzzer.jpg" alt="Buzzer">
+          <h3>Buzzers 🔔</h3>
+          <p>Makes sounds when electricity flows</p>
+        </div>
+      </div>
+    
+      <div class="activity-box">
+        <h2>Let's Build Our First Circuit! 🎮</h2>
+        <div class="content-with-image">
+          <div class="text-content">
+            <h3>Physical Components Needed:</h3>
+            <ul>
+              <li>1x Breadboard</li>
+              <li>1x 9V Battery with clip</li>
+              <li>1x LED (any color)</li>
+              <li>1x 220Ω Resistor</li>
+              <li>1x Switch</li>
+              <li>2x Jumper wires</li>
+            </ul>
+          </div>
+          <div class="image-content">
+            <img src="images/ledCircuit.png" alt="Circuit components laid out">
+          </div>
+        </div>
+    
+        <div class="content-with-image">
+          <div class="text-content">
+            <h3>Using Wokwi Simulator:</h3>
+            <ol>
+              <li>Go to wokwi.com</li>
+              <li>Click "New Project"</li>
+              <li>Select "Arduino UNO"</li>
+              <li>Look for the components panel on the right</li>
+            </ol>
+          </div>
+          <div class="image-content">
+            <img src="images/wowkiInterface.png" alt="Wokwi interface screenshot">
+          </div>
+        </div>
+      </div>
+    
+      <div class="content-with-image">
+        <div class="text-content">
+          <h2>Step-by-Step Circuit Building 🔨</h2>
+          <h3>Physical Build:</h3>
+          <ol>
+            <li><strong>Prepare the LED:</strong> Notice the longer leg (positive) and shorter leg (negative)</li>
+            <li><strong>Insert the LED:</strong> Long leg in row 10, short leg in row 11</li>
+            <li><strong>Add the resistor:</strong> One end in row 11 with LED's short leg, other end in row 12</li>
+            <li><strong>Place the switch:</strong> In rows 13 and 14</li>
+            <li><strong>Connect power:</strong> Battery clip red wire to LED's long leg, black wire to resistor's other end</li>
+          </ol>
+        </div>
+      </div>
+        
+      <div class="content-with-image">
+        <div class="text-content">
+          <h3>Wokwi Build:</h3>
+          <ol>
+            <li><strong>Add components:</strong> Drag LED, resistor, and switch from the panel</li>
+            <li><strong>Connect ground:</strong> Wire from Arduino GND to breadboard minus rail</li>
+            <li><strong>Connect power:</strong> Wire from Arduino 5V to breadboard plus rail</li>
+            <li><strong>Build circuit:</strong> Follow same pattern as physical build</li>
+            <li><strong>Click "Start Simulation"</strong> to test your circuit</li>
+          </ol>
+        </div>
+      </div>
+    
+      <div class="fun-fact">
+        <h3>💡 Troubleshooting Tips:</h3>
+        <p>LED not lighting up? Check these common issues:</p>
+        <ul>
+          <li>Is the LED in the right direction? (Long leg to positive)</li>
+          <li>Are all connections secure?</li>
+          <li>Is the battery fresh? (For physical build)</li>
+          <li>Are the wires connected to the right pins? (For Wokwi)</li>
+        </ul>
+      </div>
+    
+      <div class="activity-box">
+        <h2>Bonus Challenge: Flashing LED! ⚡</h2>
+        <div class="content-with-image">
+          <div class="text-content">
+            <p>Ready to make your LED blink? In Wokwi, we can do this with simple Arduino code:</p>
+            <pre>
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+}</pre>
+          </div>
+          <div class="image-content">
+            <img src="images/flashingLED.png" alt="Flashing LED circuit">
+          </div>
+        </div>
+      </div>
+    
+      <div class="safety-grid">
+        <div class="safety-card">
+          <img src="images/HandleCare.png" alt="Component handling">
+          <h3>Gentle Hands 🤲</h3>
+          <p>Handle components carefully</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/doubleCheck.jpg" alt="Double check">
+          <h3>Double Check ✔️</h3>
+          <p>Verify connections before power</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/CleanSpace.jpg" alt="Clean workspace">
+          <h3>Clean Space 🧹</h3>
+          <p>Keep your work area tidy</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/adult care.png" alt="Ask help">
+          <h3>Ask Help 🤝</h3>
+          <p>When in doubt, ask an adult</p>
+        </div>
+      </div>
+    
+      <div class="content-with-image">
+        <div class="text-content">
+          <h2>Coming Up Next... 🎯</h2>
+          <p>Get ready to explore motors and sensors! We'll learn how to make things move and how robots can detect the world around them!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2023 KidsBuild.Tech | Building the Future, One Robot at a Time
+  </footer>
+
+  <script>
+    const menu = document.getElementById('menu');
+    const menuButtonHeader = document.getElementById('menuButtonHeader');
+    const arrow = document.querySelector('.arrow');
+
+    function toggleMenu() {
+      const isOpen = menu.classList.toggle('open');
+      arrow.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+    }
+
+
+  </script>
+</body>
+</html>

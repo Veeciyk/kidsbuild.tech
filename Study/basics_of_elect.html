@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - KidsBuild.Tech</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Comic Neue', cursive;
+      background-color: #87CEEB;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background-color: #FF69B4;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 20px 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      height: 80px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin: 0;
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .menu-button-header {
+      background-color: white;
+      color: #FF69B4;
+      font-size: 20px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+      position: absolute;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-button-header:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    .menu-button-header .arrow {
+      font-size: 24px;
+      transition: transform 0.3s;
+      display: none;
+    }
+
+    /* Menu */
+    .menu {
+      width: 250px;
+      height: 100vh;
+      background-color: #87CEEB;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      transition: left 0.3s;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .menu.open {
+      left: 0;
+    }
+
+    .menu-button {
+      background-color: white;
+      color: #FF69B4;
+      font-size: 20px;
+      border: none;
+      padding: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+    }
+
+    .menu-button:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+      font-size: 18px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu a:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      margin: 0 auto;
+      max-width: 1200px;
+    }
+
+    .lesson-section {
+      background-color: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-with-image {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .text-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .image-content {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .image-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      color: #FF69B4;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .fun-fact {
+      background-color: #E6F7FF;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 5px solid #1E90FF;
+    }
+
+    .robot-parts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .part-card {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .part-card img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    .activity-box {
+      background-color: #F0FFF0;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border: 2px dashed #4CAF50;
+    }
+
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .safety-card {
+      background-color: #FFF3E0;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .safety-card img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: white;
+      padding: 1rem;
+      color: #333;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: auto;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .menu-button-header {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+
+      .menu {
+        width: 100%;
+        height: auto;
+        top: -100%;
+        left: 0;
+        transition: top 0.3s;
+      }
+
+      .menu.open {
+        top: 80px;
+      }
+
+      .menu-button-header .arrow {
+        display: inline;
+      }
+
+      .menu-button-header .text {
+        display: none;
+      }
+
+      .menu a {
+        padding: 15px;
+        font-size: 16px;
+      }
+
+      .lesson-title {
+        font-size: 2rem;
+      }
+    }
+
+   
+  </style>
+</head>
+<body class="primary-1-3">
+  <div class="header">
+
+    <h1>KidsBuild.Tech Dashboard</h1>
+  </div>
+
+
+
+  <div class="main-content" id="mainContent">
+    <div class="lesson-section">
+        <h1 class="section-title" style="text-align: center;">Class 2: The Magic of Electricity! ⚡</h1>
+        
+        <div class="content-with-image">
+          <div class="text-content">
+            <h2>Welcome to the World of Electricity! 🔋</h2>
+            <p>Today, we're going to learn about something super important for robots: Electricity! Without it, robots would just sit there like a toy with no batteries. But with electricity, they can move, light up, and even follow your commands!</p>
+          </div>
+          <div class="image-content">
+            <img src="images/elect1.jpg" alt="Electricity visualization">
+          </div>
+        </div>
+      
+        <div class="content-with-image">
+          <div class="image-content">
+            <img src="images/elect2.jpg" alt="Electron">
+          </div>
+          <div class="text-content">
+            <h2>What is Electricity? ⚡</h2>
+            <p>Electricity is energy that flows like an invisible river inside wires. It's made up of tiny, invisible balls called electrons that move in a path called a circuit. When these electrons flow through things like lights or motors, they make them work!</p>
+          </div>
+        </div>
+      
+        <div class="fun-fact">
+          <h3>🧠 Fun Fact!</h3>
+          <p>The human brain also uses tiny amounts of electricity to send messages! That's how you can think, move, and even blink your eyes.</p>
+        </div>
+      
+        <div class="robot-parts">
+          <div class="part-card">
+            <img src="images/battery2.jpg" alt="Battery">
+            <h3>Batteries 🔋</h3>
+            <p>Store small amounts of electricity for portable devices</p>
+          </div>
+          <div class="part-card">
+            <img src="images/powerPlant.jpg" alt="Power station">
+            <h3>Power Stations 🏭</h3>
+            <p>Giant buildings that send electricity to our homes</p>
+          </div>
+          <div class="part-card">
+            <img src="images/solar.jpg"Solar panel">
+            <h3>Solar Panels ☀️</h3>
+            <p>Turn sunlight into electricity</p>
+          </div>
+        </div>
+      
+        <div class="content-with-image">
+          <div class="text-content">
+            <h2>Conductors vs. Insulators 🛠️</h2>
+            <p>Not everything can carry electricity! Some materials let it pass through easily, while others block it.</p>
+            <ul>
+              <li>✅ <strong>Conductors:</strong> Metals, water</li>
+              <li>❌ <strong>Insulators:</strong> Plastic, rubber, wood</li>
+            </ul>
+          </div>
+          <div class="image-content">
+            <img src="images/condVSins.png" alt="Conductors and insulators examples">
+          </div>
+        </div>
+      
+        <div class="activity-box">
+          <div class="content-with-image">
+            <div class="text-content">
+              <h2>Let's Build: Simple LED Circuit! 💡</h2>
+              <p>Time to make an LED light up! Here's what we need:</p>
+              <ul>
+                <li>9V battery</li>
+                <li>Battery clip</li>
+                <li>LED light</li>
+                <li>Resistor</li>
+                <li>Wires</li>
+              </ul>
+            </div>
+            <div class="image-content">
+              <img src="images/ledCircuit.png" alt="LED circuit diagram">
+            </div>
+          </div>
+        </div>
+      
+        <div class="safety-grid">
+          <div class="safety-card">
+            <img src="images/water care.png" alt="Water warning">
+            <h3>Keep Dry! 💧</h3>
+            <p>Never mix water and electricity!</p>
+          </div>
+          <div class="safety-card">
+            <img src="images/water care.png" alt="Adult supervision">
+            <h3>Ask an Adult 👥</h3>
+            <p>Always have supervision</p>
+          </div>
+          <div class="safety-card">
+            <img src="images/wire.jpg" alt="Wire safety">
+            <h3>Check Wires 🔌</h3>
+            <p>Make sure wires aren't damaged</p>
+          </div>
+          <div class="safety-card">
+            <img src="images/battery care.jpg" alt="Battery handling">
+            <h3>Battery Care 🔋</h3>
+            <p>Handle batteries carefully</p>
+          </div>
+        </div>
+
+          <div class="text-content">
+            <h2>Coming Up Next... 🔧</h2>
+            <p>Get ready to learn about building circuits! We'll use a breadboard to create more complex projects and make multiple LEDs light up!</p>
+          </div>
+        </div>
+      </div>>
+  </div>
+
+
+  <footer>
+    &copy; 2023 KidsBuild.Tech | Building the Future, One Robot at a Time
+  </footer>
+
+  <script>
+    const menu = document.getElementById('menu');
+    const menuButtonHeader = document.getElementById('menuButtonHeader');
+    const arrow = document.querySelector('.arrow');
+
+    function toggleMenu() {
+      const isOpen = menu.classList.toggle('open');
+      arrow.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+    }
+
+ 
+  </script>
+</body>
+</html>

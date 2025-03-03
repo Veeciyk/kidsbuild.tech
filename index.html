@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KidsBuild.Tech</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Neue', cursive;
+      background-color: #87CEEB; /* Sky Blue */
+      color: #333;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 2rem;
+      color: #FF69B4; /* Pink */
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 20px;
+    }
+
+    /* Image Section */
+    .image-section {
+      flex: 1;
+      margin-right: 2rem;
+    }
+
+    .image-section img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Buttons Section */
+    .buttons-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      display: block;
+      width: 250px;
+      padding: 12px; /* Shorter buttons */
+      margin: 10px auto;
+      font-size: 1.2rem;
+      color: white;
+      background-color: #FF69B4; /* Pink */
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      background-color: #FF1493; /* Darker Pink */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn.create-account {
+      width: 300px;
+      background-color: white;
+      color: #FF69B4; /* Pink */
+      border: 2px solid #FF69B4;
+    }
+
+    .btn.create-account:hover {
+      background-color: #FF69B4;
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      background-color: white;
+      padding: 0.5rem; /* Shorter footer */
+      color: #333;
+      font-size: 0.9rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .image-section {
+        margin-right: 0;
+        margin-bottom: 2rem;
+      }
+
+      .image-section img {
+        max-width: 100%;
+      }
+
+      .btn {
+        width: 200px;
+        font-size: 1rem;
+      }
+
+      .btn.create-account {
+        width: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .btn {
+        width: 180px;
+        font-size: 0.9rem;
+      }
+
+      .btn.create-account {
+        width: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Image Section -->
+    <div class="image-section">
+      <img src="images/kids.jpg" alt="Kids Building Robots">
+    </div>
+
+    <!-- Buttons Section -->
+    <div class="buttons-section">
+      <h1>KidsBuild.Tech</h1>
+      <p style="color: white; font-size: 1.2rem;">Building the Inventors of Tomorrow</p>
+
+      <!-- Login Buttons -->
+      <button class="btn" onclick="window.location.href='login.html'">Login</button>
+      <button class="btn create-account" onclick="window.location.href='create_account.html'">Create Account</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2023 KidsBuild.Tech | Building the Future, One Robot at a Time
+  </footer>
+
+  
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - KidsBuild.Tech</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Comic Neue', cursive;
+      background-color: #87CEEB;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background-color: #FF69B4;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 20px 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      height: 80px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin: 0;
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .menu-button-header {
+      background-color: white;
+      color: #FF69B4;
+      font-size: 20px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+      position: absolute;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-button-header:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    .menu-button-header .arrow {
+      font-size: 24px;
+      transition: transform 0.3s;
+      display: none;
+    }
+
+    /* Menu */
+    .menu {
+      width: 250px;
+      height: 100vh;
+      background-color: #87CEEB;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      transition: left 0.3s;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .menu.open {
+      left: 0;
+    }
+
+    .menu-button {
+      background-color: white;
+      color: #FF69B4;
+      font-size: 20px;
+      border: none;
+      padding: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+    }
+
+    .menu-button:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+      font-size: 18px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu a:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      margin: 0 auto;
+      max-width: 1200px;
+    }
+
+    .lesson-section {
+      background-color: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-with-image {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .text-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .image-content {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .image-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      color: #FF69B4;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .fun-fact {
+      background-color: #E6F7FF;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 5px solid #1E90FF;
+    }
+
+    .robot-parts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .part-card {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .part-card img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    .activity-box {
+      background-color: #F0FFF0;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border: 2px dashed #4CAF50;
+    }
+
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .safety-card {
+      background-color: #FFF3E0;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .safety-card img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: white;
+      padding: 1rem;
+      color: #333;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: auto;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .menu-button-header {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+
+      .menu {
+        width: 100%;
+        height: auto;
+        top: -100%;
+        left: 0;
+        transition: top 0.3s;
+      }
+
+      .menu.open {
+        top: 80px;
+      }
+
+      .menu-button-header .arrow {
+        display: inline;
+      }
+
+      .menu-button-header .text {
+        display: none;
+      }
+
+      .menu a {
+        padding: 15px;
+        font-size: 16px;
+      }
+
+      .lesson-title {
+        font-size: 2rem;
+      }
+    }
+
+
+  </style>
+</head>
+<body class="primary-1-3">
+  <div class="header">
+  
+    <h1>KidsBuild.Tech Dashboard</h1>
+  </div>
+
+
+
+  <div class="main-content" id="mainContent">
+    <div class="lesson-section">
+      <h1 class="section-title" style="text-align: center;">Class 1: What is a Robot? 🤖</h1>
+      
+      <div class="content-with-image">
+        <div class="text-content">
+          <h2>Welcome to Robotics! 🚀</h2>
+          <p>Today, we're diving into the exciting world of robots! Have you ever seen a robot in a movie or a cartoon? Maybe it was a friendly helper or a super-smart machine. Well, guess what? Robots aren't just in movies—they're real, and they're here to help us in so many ways!</p>
+        </div>
+        <div class="image-content">
+          <img src= "images/spacebot.jpg" alt="Robot in Space">
+        </div>
+      </div>
+
+      <div class="content-with-image">
+        <div class="image-content">
+          <img src="images/toybot.jpg" alt="Toy Robot">
+        </div>
+        <div class="text-content">
+          <h2>What Makes a Robot Special?</h2>
+          <p>A robot is a special kind of machine that can:</p>
+          <ul>
+            <li>💡 Sense: Using special sensors like eyes and ears</li>
+            <li>🧠 Think: Process information with its computer brain</li>
+            <li>🦾 Act: Move and do tasks with motors and parts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="robot-parts">
+        <div class="part-card">
+          <img src="images/sensor.jpg" alt="Robot sensor">
+          <h3>Sensors</h3>
+          <p>The robot's eyes and ears that help it understand the world</p>
+        </div>
+        <div class="part-card">
+          <img src="images/motor.jpg" alt="Robot motor">
+          <h3>Motors</h3>
+          <p>The robot's muscles that help it move and do work</p>
+        </div>
+        <div class="part-card">
+          <img src="images/controller.jpg" alt="Robot controller">
+          <h3>Controller</h3>
+          <p>The robot's brain that helps it make decisions</p>
+        </div>
+        <div class="part-card">
+          <img src="images/battery.jpg" alt="Robot power source">
+          <h3>Power Source</h3>
+          <p>The robot's "food" that gives it energy to work</p>
+        </div>
+      </div>
+
+      <div class="content-with-image">
+        <div class="text-content">
+          <h2>Robots vs. Regular Machines</h2>
+          <p>What makes a robot different from a regular machine? Let's see!</p>
+          <ul>
+            <li>🤖 Robot: Works by itself, makes decisions</li>
+            <li>⚙️ Machine: Needs someone to control it</li>
+          </ul>
+        </div>
+        <div class="image-content">
+          <img src="images/difference.jpg" alt="Comparison between robot and regular machine">
+        </div>
+      </div>
+
+      <div class="activity-box">
+        <div class="content-with-image">
+          <div class="text-content">
+            <h2>Let's Play: Be a Robot! 🎮</h2>
+            <p>Find a friend and try these fun commands:</p>
+            <ul>
+              <li>"Take three steps forward"</li>
+              <li>"Turn left"</li>
+              <li>"Pick up the cup"</li>
+            </ul>
+          </div>
+          <div class="image-content">
+            <img src="images/kids.jpg" alt="Kids playing robot game">
+          </div>
+        </div>
+      </div>
+
+      <div class="safety-grid">
+        <div class="safety-card">
+          <img src="images/water care.png" alt="Wet hands warning">
+          <h3>No Wet Hands! ⚡</h3>
+          <p>Water and electricity don't mix!</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/battery care.jpg" alt="Battery safety">
+          <h3>Battery Safety 🔋</h3>
+          <p>Handle batteries with care</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/adult care.png" alt="Ask for help">
+          <h3>Ask for Help ⚙️</h3>
+          <p>When in doubt, ask an adult</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/electrical care.jpg" alt="Gentle handling">
+          <h3>Be Gentle 🛠</h3>
+          <p>Handle components with care</p>
+        </div>
+      </div>
+
+        <div class="text-content">
+          <h2>Coming Up Next... ⚡</h2>
+          <p>Get ready to learn about electricity—the magic that makes robots work! We'll light up LEDs and create simple circuits together!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <footer>
+    &copy; 2023 KidsBuild.Tech | Building the Future, One Robot at a Time
+  </footer>
+
+  <script>
+    const menu = document.getElementById('menu');
+    const menuButtonHeader = document.getElementById('menuButtonHeader');
+    const arrow = document.querySelector('.arrow');
+
+    function toggleMenu() {
+      const isOpen = menu.classList.toggle('open');
+      arrow.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+    }
+
+  </script>
+</body>
+</html>

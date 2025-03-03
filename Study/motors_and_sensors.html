@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - KidsBuild.Tech</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Comic Neue', cursive;
+      background-color: #87CEEB;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background-color: #FF69B4;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 20px 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      height: 80px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin: 0;
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .menu-button-header {
+      background-color: white;
+      color: #FF69B4;
+      font-size: 20px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+      position: absolute;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-button-header:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    .menu-button-header .arrow {
+      font-size: 24px;
+      transition: transform 0.3s;
+      display: none;
+    }
+
+    /* Menu */
+    .menu {
+      width: 250px;
+      height: 100vh;
+      background-color: #87CEEB;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      transition: left 0.3s;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .menu.open {
+      left: 0;
+    }
+
+    .menu-button {
+      background-color: white;
+      color: #FF69B4;
+      font-size: 20px;
+      border: none;
+      padding: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+    }
+
+    .menu-button:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+      font-size: 18px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu a:hover {
+      background-color: #FF1493;
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      margin: 0 auto;
+      max-width: 1200px;
+    }
+
+    .lesson-section {
+      background-color: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-with-image {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .text-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .image-content {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .image-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      color: #FF69B4;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .fun-fact {
+      background-color: #E6F7FF;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 5px solid #1E90FF;
+    }
+
+    .robot-parts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .part-card {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .part-card img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    .activity-box {
+      background-color: #F0FFF0;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border: 2px dashed #4CAF50;
+    }
+
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .safety-card {
+      background-color: #FFF3E0;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .safety-card img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: white;
+      padding: 1rem;
+      color: #333;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: auto;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .menu-button-header {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+
+      .menu {
+        width: 100%;
+        height: auto;
+        top: -100%;
+        left: 0;
+        transition: top 0.3s;
+      }
+
+      .menu.open {
+        top: 80px;
+      }
+
+      .menu-button-header .arrow {
+        display: inline;
+      }
+
+      .menu-button-header .text {
+        display: none;
+      }
+
+      .menu a {
+        padding: 15px;
+        font-size: 16px;
+      }
+
+      .lesson-title {
+        font-size: 2rem;
+      }
+    }
+
+   
+  </style>
+</head>
+<body class="primary-1-3">
+  <div class="header">
+
+    <h1>KidsBuild.Tech Dashboard</h1>
+  </div>
+
+
+
+  <div class="main-content" id="mainContent">
+    <div class="lesson-section">
+      <h1 class="section-title" style="text-align: center;">Class 4: Introduction to Motors and Sensors 🤖</h1>
+      
+      <div class="content-with-image">
+        <div class="text-content">
+          <h2>Welcome Back, Young Engineers! 🚀</h2>
+          <p>Today we're exploring the parts that make robots come alive - motors and sensors! Motors help robots move around, while sensors help them understand the world. It's like giving your robot muscles and senses!</p>
+        </div>
+        <div class="image-content">
+          <img src="/api/placeholder/400/300" alt="Robot with motors and sensors highlighted">
+        </div>
+      </div>
+    
+      <div class="robot-parts">
+        <div class="part-card">
+          <img src="images/dcMotor.jpg" alt="DC Motor">
+          <h3>DC Motors 🔄</h3>
+          <p>Spins continuously - perfect for wheels and fans!</p>
+        </div>
+        <div class="part-card">
+          <img src="images/servo.png" alt="Servo Motor">
+          <h3>Servo Motors 🎯</h3>
+          <p>Turns to exact angles - great for robot arms!</p>
+        </div>
+        <div class="part-card">
+          <img src="images/lightSensor.jpg" alt="Light Sensor">
+          <h3>Light Sensors 👁️</h3>
+          <p>Helps robots see light and darkness</p>
+        </div>
+        <div class="part-card">
+          <img src="images/ultrasonicSensor.jpg" alt="Ultrasonic Sensor">
+          <h3>Ultrasonic Sensors 📡</h3>
+          <p>Helps robots measure distances</p>
+        </div>
+      </div>
+    
+      <div class="content-with-image">
+        <div class="text-content">
+          <h2>All About Motors! 🔄</h2>
+          <p>Motors are like muscles for robots. They turn electrical energy into movement. Let's look at two types:</p>
+          <ul>
+            <li><strong>DC Motors:</strong> These spin around continuously - perfect for wheels!</li>
+            <li><strong>Servo Motors:</strong> These can turn to exact positions - great for robot arms!</li>
+          </ul>
+        </div>
+        <div class="image-content">
+          <img src="images/typesofMotors.jpg" alt="Different types of motors">
+        </div>
+      </div>
+    
+      <div class="fun-fact">
+        <h3>🌟 Fun Fact:</h3>
+        <p>Servo motors are used in real helicopters and airplanes to control the movement of wings and tail! They're super precise and can move to exact positions.</p>
+      </div>
+    
+      <div class="activity-box">
+        <h2>Activity 1: Control a DC Motor! 🎮</h2>
+        <div class="content-with-image">
+          <div class="text-content">
+            <h3>Physical Components:</h3>
+            <ul>
+              <li>1x DC Motor</li>
+              <li>1x Breadboard</li>
+              <li>1x 9V Battery with clip</li>
+              <li>1x Switch</li>
+              <li>Jumper wires</li>
+            </ul>
+          </div>
+          <div class="image-content">
+            <img src="images/dcCircuit.png" alt="DC motor circuit setup">
+          </div>
+        </div>
+    
+        <div class="content-with-image">
+          <div class="text-content">
+            <h3>Using Wokwi Simulator:</h3>
+            <ol>
+              <li>Open Wokwi and create a new Arduino project</li>
+              <li>Add a DC motor from the components panel</li>
+              <li>Connect motor positive to Arduino pin 9</li>
+              <li>Connect motor negative to ground (GND)</li>
+            </ol>
+          </div>
+          <div class="image-content">
+            <img src="images/dcWowki.jpg" alt="Wokwi DC motor simulation">
+          </div>
+        </div>
+      </div>
+    
+      <div class="content-with-image">
+        <div class="text-content">
+          <h2>Meet the Sensors! 🔍</h2>
+          <p>Sensors are like robot senses - they help robots understand their environment. Here are some common types:</p>
+          <ul>
+            <li><strong>Light Sensors:</strong> Detect brightness and darkness</li>
+            <li><strong>Sound Sensors:</strong> Pick up noises and commands</li>
+            <li><strong>Touch Sensors:</strong> Feel when something touches them</li>
+            <li><strong>Ultrasonic Sensors:</strong> Measure distances using sound waves</li>
+          </ul>
+        </div>
+        <div class="image-content">
+          <img src="images/typesofSensors.jpg" alt="Different types of sensors">
+        </div>
+      </div>
+    
+      <div class="activity-box">
+        <h2>Activity 2: Light-Sensing LED! 💡</h2>
+        <div class="content-with-image">
+          <div class="text-content">
+            <h3>Physical Build:</h3>
+            <ol>
+              <li>Place the light sensor on your breadboard</li>
+              <li>Connect LED with 220Ω resistor</li>
+              <li>Wire everything to power and ground</li>
+              <li>Test by covering the sensor!</li>
+            </ol>
+          </div>
+          <div class="image-content">
+            <img src="images/lightSensorCircuit.png" alt="Light sensor circuit setup">
+          </div>
+        </div>
+    
+        <div class="content-with-image">
+          <div class="text-content">
+            <h3>Wokwi Version:</h3>
+            <pre>
+    // Arduino code for light sensor
+    void setup() {
+      pinMode(A0, INPUT);    // Light sensor
+      pinMode(13, OUTPUT);   // LED
+    }
+    
+    void loop() {
+      int light = analogRead(A0);
+      if (light < 500) {    // Dark
+        digitalWrite(13, HIGH);
+      } else {              // Bright
+        digitalWrite(13, LOW);
+      }
+      delay(100);
+    }</pre>
+          </div>
+          <div class="image-content">
+            <img src="images/lightSensorWowki.png" alt="Wokwi light sensor simulation">
+          </div>
+        </div>
+      </div>
+    
+      <div class="activity-box">
+        <h2>Super Challenge: Obstacle-Avoiding Robot! 🚗</h2>
+        <div class="content-with-image">
+          <div class="text-content">
+            <h3>What You'll Need:</h3>
+            <ul>
+              <li>2x DC Motors (for wheels)</li>
+              <li>1x Ultrasonic Sensor</li>
+              <li>1x Arduino Board</li>
+              <li>Battery pack</li>
+              <li>Wheels and chassis</li>
+            </ul>
+          </div>
+          <div class="image-content">
+            <img src="images/obstacleRobot.jpg" alt="Obstacle avoiding robot">
+          </div>
+        </div>
+    
+        <div class="content-with-image">
+          <div class="text-content">
+            <h3>Wokwi Code:</h3>
+            <pre>
+    // Basic obstacle avoidance code
+    void setup() {
+      pinMode(9, OUTPUT);    // Left motor
+      pinMode(10, OUTPUT);   // Right motor
+      pinMode(12, OUTPUT);   // Ultrasonic trigger
+      pinMode(11, INPUT);    // Ultrasonic echo
+    }
+    
+    void loop() {
+      if (getDistance() < 20) {  // Object closer than 20cm
+        turn();
+      } else {
+        moveForward();
+      }
+      delay(100);
+    }</pre>
+          </div>
+          <div class="image-content">
+            <img src="images/obstacleWowki.png" alt="Wokwi robot simulation">
+          </div>
+        </div>
+      </div>
+    
+      <div class="safety-grid">
+        <div class="safety-card">
+          <img src="images/motorsafety.jpg" alt="Motor safety">
+          <h3>Motor Safety ⚙️</h3>
+          <p>Keep fingers away from spinning parts</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/wire.jpg" alt="Wire management">
+          <h3>Wire Care 🔌</h3>
+          <p>Keep wires neat and organized</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/battery care.jpg" alt="Battery safety">
+          <h3>Battery Check 🔋</h3>
+          <p>Use correct voltage for motors</p>
+        </div>
+        <div class="safety-card">
+          <img src="images/toolsafety.jpg" alt="Tool safety">
+          <h3>Tool Safety 🔨</h3>
+          <p>Handle tools with care</p>
+        </div>
+      </div>
+    
+      <div class="content-with-image">
+
+        <div class="text-content">
+          <h2>Coming Up Next... 💻</h2>
+          <p>Get ready to make your robots even smarter! We'll learn about microcontrollers and how to program them using Arduino. You'll write your first robot control program!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <footer>
+    &copy; 2023 KidsBuild.Tech | Building the Future, One Robot at a Time
+  </footer>
+
+  <script>
+    const menu = document.getElementById('menu');
+    const menuButtonHeader = document.getElementById('menuButtonHeader');
+    const arrow = document.querySelector('.arrow');
+
+    function toggleMenu() {
+      const isOpen = menu.classList.toggle('open');
+      arrow.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+    }
+
+   
+  </script>
+</body>
+</html>
